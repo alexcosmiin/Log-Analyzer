@@ -1,2 +1,0 @@
-# Log-Analyzer
-Log Analyzer
