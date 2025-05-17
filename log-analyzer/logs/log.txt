@@ -1,0 +1,10 @@
+[INFO] Aplicația a pornit cu succes
+[INFO] Verificare conexiune la baza de date
+[WARNING] Spațiu pe disc scăzut (25% rămas)
+[ERROR] Nu s-a putut conecta la serviciul extern
+[INFO] Procesare cerere #12345
+[INFO] Cerere completată în 235ms
+[WARNING] Cerere lentă detectată (>200ms)
+[ERROR] Eroare la procesarea fișierului: format nerecunoscut
+[INFO] Session timeout pentru utilizatorul user123
+[WARNING] Mai multe încercări eșuate de autentificare pentru IP 192.168.1.100
