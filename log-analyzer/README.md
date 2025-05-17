@@ -1,67 +1,89 @@
 # Log Analyzer
 
-Un instrument simplu pentru analiza și clasificarea fișierelor de log.
+Acest proiect oferă un sistem complet pentru analiza automată a fișierelor de log, folosind Python și Docker. Include parsare, clasificare, generare de rezultate și un framework personalizat de testare.
 
-## Structură
+## 📁 Structura Proiectului
 
-```
-log-analyzer/
-├── logs/                   # loguri de test
-├── tests/                  # testele automate
-├── src/                    # codul sursă principal
-│   ├── parser.py           # extragere informații din loguri
-│   ├── classifier.py       # clasificare erori/mesaje
-│   └── main.py             # rulează totul cap-coadă
-├── Dockerfile              # containerizarea aplicației
-├── docker-compose.yml      # pentru orchestrare
-├── requirements.txt        # dependințele Python
-└── README.md               # descrierea proiectului
-```
+.
+├── app/                     # Logica principală a aplicației pentru analiză
+│   ├── log_classifier.py   # Clasificarea logurilor
+│   └── log_parser.py       # Parsarea fișierelor de log
+│
+├── src/                    # Scripturi auxiliare sau versiuni experimentale
+│   ├── main.py             # Punct alternativ de pornire
+│   ├── classifier.py
+│   └── parser.py
+│
+├── tests/                  # Teste unitare și de integrare
+│   ├── smoke/              # Teste de tip smoke
+│   ├── software/           # Teste pentru componente software
+│   ├── integration/        # Teste de integrare
+│   ├── framework/          # Exemple sau teste de structură
+│   ├── common_functions.py # Funcții comune de testare (loguri, helperi)
+│   └── __init__.py
+│
+├── test_framework/         # Framework propriu de testare
+│   ├── core/               # Clase de bază: TestCase, TestStep, TestSuite
+│   ├── reporting/          # Generatoare de rapoarte (HTML și consolă)
+│   ├── runners/            # Executori de teste
+│   └── utils/              # Utilitare: assertions, logger, decorators
+│
+├── logs/                   # Fișierele brute de intrare (ex: log.txt)
+├── output/                 # Fișierele de ieșire generate de aplicație
+├── reports/                # Rapoarte HTML ale testelor
+├── start_script.sh         # Script pentru rularea containerului și extragerea rezultatelor
+├── run_tests.py            # Script de rulare a testelor cu filtrare și categorii
+├── Dockerfile              # Definirea imaginii Docker
+├── docker-compose.yml      # (opțional) configurare multi-container
+├── requirements.txt        # Lista de dependințe Python
+├── README.md               # Documentație generală
+├── pytest.ini              # Configurații pentru pytest (dacă e folosit)
 
-## Instrucțiuni Docker
 
-### Rulare aplicație
+## ⚙️ Cerințe
 
-Pentru a rula aplicația într-un container Docker:
+- Python 3.8+
+- Docker
+- Sistem de operare: Linux (testat pe Ubuntu)
 
-```bash
-docker-compose up app
-```
+## 🚀 Instalare și Rulare
 
-### Rulare teste
+1. Asigură-te că Docker este instalat și activ.
+2. Clonează acest repository:
+   git clone https://github.com/numele-tau/log-analyzer.git
+   cd log-analyzer
 
-Pentru a rula testele automate într-un container Docker:
+Rularea completă a aplicației:
+chmod +x start_script.sh
+./start_script.sh
+Scriptul va: construi imaginea Docker, porni containerul, extrage output.json din container în directorul output/.
 
-```bash
-docker-compose up test
-```
 
-### Construire imagine Docker
+## Testare
+Framework-ul de testare permite rularea testelor filtrat pe categorii sau nume:
+# Toate testele smoke
+python3 run_tests.py --category smoke
 
-Pentru a construi imaginea Docker:
+# Teste software (unitare)
+python3 run_tests.py --category software
 
-```bash
-docker build -t log-analyzer .
-```
+# Teste de integrare
+python3 run_tests.py --category integration
 
-### Rulare manual
+# Rulare după numele unui test
+python3 run_tests.py --filter test_log_parser
+Rezultatele sunt afișate în consolă și salvate într-un raport HTML interactiv.
 
-Pentru a rula aplicația manual în container:
+## 🧪 Categorii de Teste
+smoke/ – Teste simple de validare a intrărilor
 
-```bash
-docker run -v $(pwd)/logs:/app/logs -v $(pwd)/output:/app/output log-analyzer
-```
+software/ – Teste unitare pentru parser și classifier
 
-## Structură Output
+integration/ – Teste end-to-end pe întreg sistemul
 
-Output-ul va fi scris în fișierul `/app/output/output.json` în formatul:
-
-```json
-[
-  {
-    "type": "ERROR|WARNING|INFO|UNKNOWN",
-    "message": "Mesajul de log"
-  },
-  ...
-]
-```
+## 🧰 Tehnologii utilizate
+# Python 3.x
+# Docker
+# Bash
+# HTML (raport testare)
+# Framework personalizat pentru testare bazat pe unittest
