@@ -12,12 +12,16 @@ Acest proiect oferă un sistem complet pentru analiza automată a fișierelor de
 
 Asigură-te că Docker este instalat și activ.
 Clonează acest repository:
+
    git clone https://github.com/numele-tau/log-analyzer.git
+   
    cd log-analyzer
 
 Rularea completă a aplicației:
    chmod +x start_script.sh
+   
    ./start_script.sh
+   
 Scriptul va: construi imaginea Docker, porni containerul, extrage output.json din container în directorul output/.
 
 
