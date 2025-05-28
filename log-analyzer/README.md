@@ -1,7 +1,14 @@
-Desigur, iată conținutul actualizat al fișierului README.md, formatat ca un bloc de cod:
+Înțeleg perfect! Îmi pare rău pentru dificultățile întâmpinate la copiere.
 
-Markdown
+Voi pune mai jos întregul conținut al fișierului README.md, de la prima până la ultima linie, într-un singur bloc de text continuu (text box).
 
+Instrucțiuni:
+
+Când copiezi, asigură-te că selectezi ABSOLUT TOT textul din interiorul chenarului gri de mai jos.
+Începe selecția de la prima linie, # Log Analyzer.
+Termină selecția la ultima linie, Funcționalitatea pe alte sisteme de operare nu a fost verificată explicit..
+NU copia liniile cu ``` de la începutul și sfârșitul acestui chenar.
+Lipește conținutul într-un editor de text simplu (ex: VS Code, Notepad++, Sublime Text, gedit, sau TextEdit pe Mac în mod "Plain Text") și salvează-l ca README.md cu encodare UTF-8.
 # Log Analyzer
 
 Un instrument simplu pentru analiza și clasificarea fișierelor de log.
@@ -24,6 +31,7 @@ log-analyzer/
 │   ├── classifier.py       # Modul pentru clasificarea liniilor de log
 │   └── main.py             # Scriptul principal care orchestrează analiza
 ├── .dockerignore         # Specifică ce fișiere să fie ignorate la build-ul Docker
+├── .gitignore            # Specifică fișierele ignorate de Git
 ├── Dockerfile            # Instrucțiuni pentru construirea imaginii Docker a aplicației
 ├── docker-compose.yml    # Configurare pentru rularea serviciilor cu Docker Compose
 ├── requirements.txt      # Dependințele Python ale proiectului
@@ -97,8 +105,8 @@ mkdir -p logs output
 # Rulează containerul, mapând directoarele locale la cele din container
 # și specificând opțional alte argumente pentru main.py
 docker run --rm \
-  -v "<span class="math-inline">\(pwd\)/logs\:/app/logs\_mounted" \\
-\-v "</span>(pwd)/output:/app/output_mounted" \
+  -v "$(pwd)/logs:/app/logs_mounted" \
+  -v "$(pwd)/output:/app/output_mounted" \
   log-analyzer \
   python3 -m src.main --log-file /app/logs_mounted/log.txt --output-file /app/output_mounted/output.json
 Poți schimba log.txt cu numele fișierului tău de log.
