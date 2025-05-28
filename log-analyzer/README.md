@@ -1,49 +1,67 @@
 # Log Analyzer
 
-Acest proiect oferă un sistem complet pentru analiza automată a fișierelor de log, folosind Python și Docker. Include parsare, clasificare, generare de rezultate și un framework personalizat de testare.
+Un instrument simplu pentru analiza și clasificarea fișierelor de log.
 
-## ⚙️ Cerințe
+## Structură
 
-- Python 3.8+
-- Docker
-- Sistem de operare: Linux (testat pe Ubuntu)
+```
+log-analyzer/
+├── logs/                   # loguri de test
+├── tests/                  # testele automate
+├── src/                    # codul sursă principal
+│   ├── parser.py           # extragere informații din loguri
+│   ├── classifier.py       # clasificare erori/mesaje
+│   └── main.py             # rulează totul cap-coadă
+├── Dockerfile              # containerizarea aplicației
+├── docker-compose.yml      # pentru orchestrare
+├── requirements.txt        # dependințele Python
+└── README.md               # descrierea proiectului
+```
 
-## 🚀 Instalare și Rulare
+## Instrucțiuni Docker
 
-Asigură-te că Docker este instalat și activ.
-Clonează acest repository:
+### Rulare aplicație
 
-   git clone https://github.com/numele-tau/log-analyzer.git
-   
-   cd log-analyzer
+Pentru a rula aplicația într-un container Docker:
 
-Rularea completă a aplicației:
-   chmod +x start_script.sh
-   
-   ./start_script.sh
-   
-Scriptul va: construi imaginea Docker, porni containerul, extrage output.json din container în directorul output/.
+```bash
+docker-compose up app
+```
 
+### Rulare teste
 
-## Testare
-Framework-ul de testare permite rularea testelor filtrat pe categorii sau nume:
-### Toate testele smoke
-python3 run_tests.py --category smoke
+Pentru a rula testele automate într-un container Docker:
 
-### Teste software (unitare)
-python3 run_tests.py --category software
+```bash
+docker-compose up test
+```
 
-### Teste de integrare
-python3 run_tests.py --category integration
+### Construire imagine Docker
 
-### Rulare după numele unui test
-python3 run_tests.py --filter test_log_parser
+Pentru a construi imaginea Docker:
 
-Rezultatele sunt afișate în consolă și salvate într-un raport HTML interactiv.
+```bash
+docker build -t log-analyzer .
+```
 
-## 🧰 Tehnologii utilizate
-### Python 3.x
-### Docker
-### Bash
-### HTML (raport testare)
-### Framework personalizat pentru testare bazat pe unittest
+### Rulare manual
+
+Pentru a rula aplicația manual în container:
+
+```bash
+docker run -v $(pwd)/logs:/app/logs -v $(pwd)/output:/app/output log-analyzer
+```
+
+## Structură Output
+
+Output-ul va fi scris în fișierul `/app/output/output.json` în formatul:
+
+```json
+[
+  {
+    "type": "ERROR|WARNING|INFO|UNKNOWN",
+    "message": "Mesajul de log"
+  },
+  ...
+]
+```

@@ -1,19 +1,20 @@
-FROM python:3.9-slim
+# Use Python base image
+FROM python:3.11-slim
 
+# Set working directory
 WORKDIR /app
 
-# Copiem requirements.txt pentru a instala dependențele
+# Copy dependency files first for caching
 COPY requirements.txt .
+
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiem restul codului sursa
+# Copy the rest of the app files
 COPY . .
 
-# Adaugă în Dockerfile
-COPY logs/log.txt /app/logs/log.txt
-
-# Cream directorul pentru output
+# Ensure output directory exists
 RUN mkdir -p /app/output
 
-# Comanda implicită - ruleaza aplicația
-CMD ["python", "src/main.py"]
+# Default command to run your app
+CMD ["python3", "-m", "src.main"]
