@@ -1,10 +1,40 @@
-[INFO] Aplicația a pornit cu succes
-[INFO] Verificare conexiune la baza de date
-[WARNING] Spațiu pe disc scăzut (25% rămas)
-[ERROR] Nu s-a putut conecta la serviciul extern
-[INFO] Procesare cerere #12345
-[INFO] Cerere completată în 235ms
-[WARNING] Cerere lentă detectată (>200ms)
-[ERROR] Eroare la procesarea fișierului: format nerecunoscut
-[INFO] Session timeout pentru utilizatorul user123
-[WARNING] Mai multe încercări eșuate de autentificare pentru IP 192.168.1.100
+[2025-05-13 10:23:41] INFO - User John successfully logged in
+[2025-05-13 10:24:10] ERROR - Login failed for user Alice
+[2025-05-13 10:24:33] DEBUG - Auth token generated for user John
+[2025-05-13 10:24:55] WARNING - Payment took longer than expected for user Bob
+[2025-05-13 10:25:01] INFO - Payment succeeded for user Bob
+[2025-05-13 10:25:44] CRITICAL - Database connection lost
+[2025-05-13 10:26:05] INFO - Reconnected to database
+[2025-05-13 10:26:12] ERROR - Failed to write to DB: timeout
+[2025-05-13 10:26:45] INFO - New product added: ID 834729
+[2025-05-13 10:27:18] INFO - API request received: GET /users
+[2025-05-13 10:28:22] ERROR - API error: invalid token
+[2025-05-13 10:29:00] INFO - Session ended for user Alice
+[2025-05-13 10:29:35] INFO - Payment initiated for user Mike
+[2025-05-13 10:29:59] WARNING - Unusual delay in response time
+[2025-05-13 10:30:03] DEBUG - Retrying DB write for invoice #473
+[2025-05-13 10:30:35] ERROR - Login failed for user test_user
+[2025-05-13 10:31:01] INFO - Password changed for user John
+[2025-05-13 10:31:12] INFO - Audit log exported to /var/log/audit.log
+[2025-05-13 10:31:34] ERROR - Email service unreachable
+[2025-05-13 10:32:01] CRITICAL - System overload detected
+[2025-05-13 10:32:41] DEBUG - CPU usage: 97%, RAM usage: 92%
+[2025-05-13 10:33:05] INFO - Maintenance window started
+[2025-05-13 10:33:47] WARNING - Disk space low: 3% remaining
+[2025-05-13 10:34:15] INFO - Cleanup script completed
+[2025-05-13 10:34:55] ERROR - Something else failed
+[2025-05-13 10:35:10] DEBUG - Trace: NullReferenceException at module X
+[2025-05-13 10:36:01] INFO - System rebooted
+[2025-05-13 10:36:32] ERROR - Invalid user input: empty email
+[2025-05-13 10:37:00] INFO - New admin account created: superuser
+[2025-05-13 10:37:35] WARNING - Too many login attempts for user Bob
+[2025-05-13 10:38:18] INFO - Session timeout for user test_user
+[2025-05-13 10:39:01] DEBUG - JWT token validation passed
+[2025-05-13 10:39:45] INFO - Exported 57 records to CSV
+[2025-05-13 10:40:10] ERROR - CSV export failed: permission denied
+[2025-05-13 10:40:55] INFO - Retry scheduled in 5 seconds
+[2025-05-13 10:41:32] CRITICAL - Kernel panic: system halted
+[2025-05-13 10:42:15] INFO - System recovery completed
+[2025-05-13 10:42:47] DEBUG - Log rotation initiated
+[2025-05-13 10:43:01] WARNING - API rate limit near threshold
+[2025-05-13 10:43:59] INFO - All systems operational

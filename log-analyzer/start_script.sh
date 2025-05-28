@@ -1,45 +1,42 @@
 #!/bin/bash
 
-# Script to copy log analyzer output from Docker container
-#!/bin/bash
+# 0. Ensure the output directory exists on the host machine.
+#    The -p flag ensures the command doesn't fail if the directory already exists.
+mkdir -p output
 
-# 0. Build Docker image
+# 1. Build the Docker image from the Dockerfile in the current directory.
+#    The -t flag tags the image with a name (log-analyzer) for easier reference.
 echo "Building Docker image..."
 docker build -t log-analyzer .
 
-# 1. Run the container (without --rm)
+# 2. Run the container with a mounted volume.
+#    --rm -> Automatically removes the container when it exits. This prevents
+#            conflicts from old containers if the script is run multiple times.
+#    -v "$(pwd)/output:/app/output" -> Maps the host's current directory's 'output' subfolder
+#                                      to the '/app/output' directory inside the container.
+#                                      Any file the app writes to /app/output will instantly
+#                                      appear in ./output on the host.
 echo "Starting log-analyzer container..."
-docker run -it --name temp-log-analyzer log-analyzer
+docker run --rm -v "$(pwd)/output:/app/output" --name temp-log-analyzer log-analyzer
 
-# 2. Check if container ran successfully
+# 3. Check the exit code of the last command (docker run).
+#    An exit code of 0 means the container ran and exited without errors.
 if [ $? -eq 0 ]; then
-    echo "Container ran successfully. Copying output file..."
-    
-    # 3. Create output directory if it doesn't exist
-    mkdir -p output
-    
-    # 4. Copy file from container
-    docker cp temp-log-analyzer:/app/output/output.json ./output/
-    
-    # 5. Check if copy was successful
-    if [ $? -eq 0 ]; then
-        echo "File copied successfully to ./output/output.json"
-        
-        # 6. Show file contents
-        echo "File contents:"
-        cat ./output/output.json | head -n 5
-        echo "[...]"
-    else
-        echo "ERROR: Failed to copy output file"
-    fi
-    
-    # 7. Clean up container
-    echo "Removing container..."
-    docker rm -f temp-log-analyzer
-else
-    echo "ERROR: Container failed to run"
-fi
+    echo "Container ran successfully."
+    echo "Output file should be in the ./output/ directory."
 
-# 8. Final check
-echo "Verifying output directory:"
-ls -lh output/
+    # 4. Verify the result and display it to the user.
+    echo "Verifying output directory:"
+    ls -lh output/
+
+    # Check if the expected output file was actually created by the application.
+    if [ -f "./output/output.json" ]; then
+        echo "File contents:"
+        cat ./output/output.json
+    else
+        echo "WARNING: The application ran, but output.json was not created."
+    fi
+else
+    # A non-zero exit code means the container failed to run.
+    echo "ERROR: Container failed to run. Check the logs above for errors from the application."
+fi
