@@ -1,4 +1,4 @@
-# 📎 Log Analyzer
+# 🧾 Log Analyzer
 
 Un instrument simplu pentru analiza și clasificarea fișierelor de log.
 
@@ -8,47 +8,56 @@ Un instrument simplu pentru analiza și clasificarea fișierelor de log.
 
 ```
 log-analyzer/
-├── logs/                 # Fișiere de log (ex: pentru rulare manuală)
-├── output/               # Fișiere JSON generate (ex: rulare manuală)
-├── reports/              # Rapoarte HTML ale testelor
-├── tests/                # Suită de teste automate
-│   ├── common_functions.py
-│   ├── dummy_category/     
-│   ├── framework_tests/    
-│   ├── integration_tests/  
-│   └── software_tests/     
-├── src/                  # Codul sursă principal
+├── app/                   # Logica principală a aplicației (parsare + clasificare)
 │   ├── __init__.py
-│   ├── parser.py           
-│   ├── classifier.py       
-│   └── main.py             
-├── .dockerignore         
-├── .gitignore            
-├── Dockerfile            
-├── docker-compose.yml    
-├── requirements.txt      
-├── run_tests.py          
-└── README.md             
+│   ├── log_classifier.py
+│   └── log_parser.py
+├── src/                   # Scripturi auxiliare
+│   ├── main.py            # Punct alternativ de pornire
+│   ├── classifier.py
+│   └── parser.py
+├── test_framework/        # Framework propriu de testare
+│   ├── core/              # TestCase, TestStep, TestSuite
+│   ├── reporting/         # HTML și consola
+│   ├── runners/           # Executori de teste
+│   └── utils/             # Assertions, logger, decorators
+├── tests/                 # Suita de teste automatizate
+│   ├── common_functions.py
+│   ├── dummy/
+│   ├── framework/
+│   ├── integration/
+│   ├── smoke/
+│   └── software/
+├── logs/                  # Fișiere brute de log (ex: log.txt)
+├── output/                # Output JSON generat de aplicație
+├── reports/               # Rapoarte HTML de testare
+├── run_tests.py           # Script pentru rularea testelor
+├── start_script.sh        # Script pentru rulare automată
+├── requirements.txt       # Dependențe Python
+├── Dockerfile             # Definirea imaginii Docker
+├── docker-compose.yml     # Configurare multi-container (opțional)
+├── pytest.ini             # Configurații Pytest
+└── README.md              # Acest fișier
 ```
 
 ---
 
 ## ✅ Prerechizite
 
-* [x] Docker
-* [x] Docker Compose
-* [x] Python 3.11+ (pentru rulare locală și dezvoltare)
+* Python 3.11+
+* Docker
+* Docker Compose
 
 ---
 
-## ⚙️ Configurare Inițială
+## ⚙️ Instalare și Configurare Rapidă
 
 ```bash
-git clone <URL_REPOSITORY>
-cd log-analyzer
+git clone https://github.com/alexcosmiin/Log-Analyzer.git
+cd Log-Analyzer
 ```
 
-### Creare mediu virtual și instalare dependințe
+### Pentru rulare locală:
 
 ```bash
 python3 -m venv venv
@@ -56,97 +65,79 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+### Pentru rulare completă cu Docker:
+
+```bash
+chmod +x start_script.sh
+./start_script.sh
+```
+
+Acest script:
+
+* construiește imaginea Docker
+* pornește containerul
+* extrage fișierul `output.json`
+* îl salvează în `output/`
+
 ---
 
-## 🐳 Instrucțiuni Docker
+## 🐳 Alternativ: Comenzi Docker Manuale
 
-### Construire imagine Docker
+### Build manual imagine Docker:
 
 ```bash
 docker build -t log-analyzer .
 ```
 
----
-
-### Rulare aplicație cu Docker Compose (metoda recomandată)
-
-1. Asigură-te că ai un fișier `logs/log.txt` în rădăcina proiectului.
-2. Rulează:
+### Rulare aplicație:
 
 ```bash
 docker-compose up app
 ```
 
-Pentru rulare în background și reconstruirea imaginii:
+### Rulare aplicație în background:
 
 ```bash
 docker-compose up -d --build app
 ```
 
-> 📄 Output-ul va apărea în `output/output.json`.
-
----
-
-### Rulare teste cu Docker Compose
+### Rulare teste:
 
 ```bash
 docker-compose up test
 ```
 
-Pentru reconstruirea imaginii de test:
-
-```bash
-docker-compose up --build test
-```
-
-> 📄 Rapoartele HTML vor fi generate în `reports/`.
+> Rapoartele HTML se vor genera în `reports/`
 
 ---
 
-### Rulare manuală aplicație (cu `docker run`)
+## 🧪 Rulare Teste (local)
+
+Activare mediu virtual și rulare teste:
 
 ```bash
-mkdir -p logs output  # dacă nu există deja
-
-docker run --rm \
-  -v "$(pwd)/logs:/app/logs_mounted" \
-  -v "$(pwd)/output:/app/output_mounted" \
-  log-analyzer \
-  python3 -m src.main \
-    --log-file /app/logs_mounted/log.txt \
-    --output-file /app/output_mounted/output.json
-```
-
-> Înlocuiește `log.txt` cu numele dorit pentru fișierul de log.
-
----
-
-## 🧪 Rulare Teste Local (fără Docker)
-
-```bash
-source venv/bin/activate  # dacă nu este deja activ
+source venv/bin/activate
 python3 run_tests.py
 ```
 
-### Alte comenzi utile:
+### Opțiuni:
 
-Rularea unei anumite categorii de teste:
+* Rulare categorie:
 
-```bash
-python3 run_tests.py --category software
-```
+  ```bash
+  python3 run_tests.py --category software
+  ```
+* Filtrare după nume:
 
-Filtrare teste după nume:
-
-```bash
-python3 run_tests.py --filter filter_by_name
-```
+  ```bash
+  python3 run_tests.py --filter test_log_parser
+  ```
 
 ---
 
-## 📋 Structură Output JSON
+## 📄 Structură Output JSON
 
-Aplicația generează un fișier JSON (ex: `output/output.json`) cu structura:
+Fișierul `output/output.json` are forma:
 
 ```json
 {
@@ -170,15 +161,31 @@ Aplicația generează un fișier JSON (ex: `output/output.json`) cu structura:
 }
 ```
 
-* Fiecare nivel de log (`INFO`, `ERROR`, `CRITICAL`, `WARNING`, `DEBUG`, `FAILED`, `UNKNOWN`) conține:
+---
 
-  * `count`: numărul de mesaje.
-  * `messages`: lista completă a liniilor de log.
-* `metadata` oferă detalii despre fișierul procesat și momentul analizei.
+## 🧪 Categorii de Teste
+
+Testele sunt împărțite în:
+
+* **Smoke tests** – verificări de bază
+* **Software tests** – validarea logicii `parser` și `classifier`
+* **Integration tests** – testarea orchestrării în medii reale (ex: Docker)
+* **Framework tests** – validarea propriului sistem de testare
+* **Dummy** – cazuri simple pentru validare funcțională
+
+Rapoartele de testare sunt salvate în `reports/` în format HTML.
 
 ---
 
-## 🧰 Mediu Testat
+## 💻 Platformă de Testare
 
-* ✅ **Ubuntu 24.04 LTS**
-* ⚠️ Alte sisteme de operare nu au fost testate explicit.
+🛑 **IMPORTANT:** Acest proiect a fost testat **exclusiv** pe **Ubuntu 24.04 LTS**.
+Funcționarea pe alte sisteme de operare (Windows, MacOS) **nu este garantată** și nu a fost verificată.
+
+---
+
+## 🌐 Cod sursă
+
+Codul complet este disponibil pe GitHub:
+
+👉 [https://github.com/alexcosmiin/Log-Analyzer](https://github.com/alexcosmiin/Log-Analyzer)
