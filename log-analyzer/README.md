@@ -1,14 +1,3 @@
-Înțeleg perfect! Îmi pare rău pentru dificultățile întâmpinate la copiere.
-
-Voi pune mai jos întregul conținut al fișierului README.md, de la prima până la ultima linie, într-un singur bloc de text continuu (text box).
-
-Instrucțiuni:
-
-Când copiezi, asigură-te că selectezi ABSOLUT TOT textul din interiorul chenarului gri de mai jos.
-Începe selecția de la prima linie, # Log Analyzer.
-Termină selecția la ultima linie, Funcționalitatea pe alte sisteme de operare nu a fost verificată explicit..
-NU copia liniile cu ``` de la începutul și sfârșitul acestui chenar.
-Lipește conținutul într-un editor de text simplu (ex: VS Code, Notepad++, Sublime Text, gedit, sau TextEdit pe Mac în mod "Plain Text") și salvează-l ca README.md cu encodare UTF-8.
 # Log Analyzer
 
 Un instrument simplu pentru analiza și clasificarea fișierelor de log.
