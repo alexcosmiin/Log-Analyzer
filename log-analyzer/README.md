@@ -89,35 +89,6 @@ Acest script:
 
 ---
 
-## 🐳 Comenzi Docker (alternative manuale)
-
-### Construire imagine:
-
-```bash
-docker build -t log-analyzer .
-```
-
-### Rulare aplicație:
-
-```bash
-docker-compose up app
-```
-
-### Rulare aplicație în background:
-
-```bash
-docker-compose up -d --build app
-```
-
-### Rulare teste:
-
-```bash
-docker-compose up test
-```
-
-> Rapoartele HTML se vor genera în `reports/`
-
----
 
 ## 🧪 Rulare Teste
 
@@ -140,6 +111,10 @@ python3 run_tests.py --filter test_log_parser
 ```
 
 > Nu este necesară activarea unui mediu virtual (`venv`).
+
+---
+
+> Rapoartele HTML se vor genera în `reports/`
 
 ---
 
