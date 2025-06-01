@@ -1,6 +1,6 @@
 # 🧾 Log Analyzer
 
-Un instrument simplu pentru analiza și clasificarea fișierelor de log.
+Un instrument simplu pentru analiza și clasificarea fișierelor de log, cu rulare automată în Docker și un framework propriu de testare.
 
 ---
 
@@ -44,46 +44,51 @@ log-analyzer/
 
 ## ✅ Prerechizite
 
-* Python 3.11+
 * Docker
 * Docker Compose
+* Python 3.11+ (pentru rularea testelor, nu pentru aplicația în sine)
 
 ---
 
 ## ⚙️ Instalare și Configurare Rapidă
 
+### 1. Clonare proiect
+
 ```bash
 git clone https://github.com/alexcosmiin/Log-Analyzer.git
-cd Log-Analyzer
+cd log-analyzer
 ```
 
-### Pentru rulare locală:
+### 2. Acordare drepturi pe director (dacă este necesar)
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+sudo chown -R $USER:$USER .
 ```
 
-### Pentru rulare completă cu Docker:
+### 3. Acordare drepturi de execuție pentru scriptul de start
 
 ```bash
 chmod +x start_script.sh
+```
+
+### 4. Rulare aplicație prin scriptul automat
+
+```bash
 ./start_script.sh
 ```
 
 Acest script:
 
-* construiește imaginea Docker
-* pornește containerul
-* extrage fișierul `output.json`
-* îl salvează în `output/`
+* Creează directorul `output/` dacă nu există.
+* Construiește imaginea Docker `log-analyzer`.
+* Rulează containerul și montează `output/` în container.
+* Verifică și afișează conținutul fișierului `output/output.json`.
 
 ---
 
-## 🐳 Alternativ: Comenzi Docker Manuale
+## 🐳 Comenzi Docker (alternative manuale)
 
-### Build manual imagine Docker:
+### Construire imagine:
 
 ```bash
 docker build -t log-analyzer .
@@ -111,33 +116,33 @@ docker-compose up test
 
 ---
 
-## 🧪 Rulare Teste (local)
+## 🧪 Rulare Teste
 
-Activare mediu virtual și rulare teste:
+### Rulare completă (local, cu Python):
 
 ```bash
-source venv/bin/activate
 python3 run_tests.py
 ```
 
-### Opțiuni:
+### Rulare pe categorii:
 
-* Rulare categorie:
+```bash
+python3 run_tests.py --category software
+```
 
-  ```bash
-  python3 run_tests.py --category software
-  ```
-* Filtrare după nume:
+### Filtrare după nume:
 
-  ```bash
-  python3 run_tests.py --filter test_log_parser
-  ```
+```bash
+python3 run_tests.py --filter test_log_parser
+```
+
+> Nu este necesară activarea unui mediu virtual (`venv`).
 
 ---
 
 ## 📄 Structură Output JSON
 
-Fișierul `output/output.json` are forma:
+Fișierul `output/output.json` va arăta astfel:
 
 ```json
 {
@@ -165,27 +170,23 @@ Fișierul `output/output.json` are forma:
 
 ## 🧪 Categorii de Teste
 
-Testele sunt împărțite în:
-
 * **Smoke tests** – verificări de bază
 * **Software tests** – validarea logicii `parser` și `classifier`
-* **Integration tests** – testarea orchestrării în medii reale (ex: Docker)
-* **Framework tests** – validarea propriului sistem de testare
-* **Dummy** – cazuri simple pentru validare funcțională
+* **Integration tests** – testarea orchestrării în Docker
+* **Framework tests** – validarea frameworkului de testare
+* **Dummy** – cazuri minimale de test
 
-Rapoartele de testare sunt salvate în `reports/` în format HTML.
+> Rapoartele de testare se salvează în `reports/` în format HTML.
 
 ---
 
 ## 💻 Platformă de Testare
 
-🛑 **IMPORTANT:** Acest proiect a fost testat **exclusiv** pe **Ubuntu 24.04 LTS**.
-Funcționarea pe alte sisteme de operare (Windows, MacOS) **nu este garantată** și nu a fost verificată.
+🛑 **IMPORTANT:** Aplicația a fost testată **exclusiv pe Ubuntu 24.04 LTS**.
+Funcționarea pe alte sisteme (Windows, macOS) **nu a fost verificată** și **nu este garantată**.
 
 ---
 
 ## 🌐 Cod sursă
-
-Codul complet este disponibil pe GitHub:
 
 👉 [https://github.com/alexcosmiin/Log-Analyzer](https://github.com/alexcosmiin/Log-Analyzer)
