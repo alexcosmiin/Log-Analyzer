@@ -44,9 +44,12 @@ log-analyzer/
 
 ## ✅ Prerechizite
 
-* Docker
-* Docker Compose
-* Python 3.11+ (pentru rularea testelor, nu pentru aplicația în sine)
+* **Sistem de operare**: Ubuntu 24.04 LTS (singura platformă testată oficial)
+* **Git** – pentru clonarea repository-ului
+* **Docker** – pentru rularea aplicației în container
+* **Docker Compose** – pentru orchestrarea rulării
+* **Python 3.11+** – necesar doar pentru rularea testelor locale
+
 
 ---
 
